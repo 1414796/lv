@@ -1,19 +1,35 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
-// const mongoose = require('./apps/db/mongoose');
+
+const morgan = require('./apps/middleware/logger.morgan');
+
+require('./apps/db/mongoose');
 
 const app = express();
 
-const controllers = require(__dirname + '/apps/controllers');
+const controllers = require('./apps/controllers');
 
-app.use('/', controllers);
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({
+    extended: false
+}));
 
-app.use(express.static('public'));
+// Setting log with morgan
+app.use(morgan);
+
+// Setting view engine with ejs
+app.set('view engine', 'ejs');
+app.engine('.ejs', require('ejs').__express);
+app.set('views', './apps/public/views');
+
+// Setting static folder
+app.use(express.static(__dirname + '../public'));
 
 app.use(cookieParser());
 
-app.use(bodyParser());
+// Setting controllers for project
+app.use('/', controllers);
 
 app.use((req, res, next) => {
 
@@ -28,7 +44,7 @@ app.use((req, res, next) => {
 
     // Set to true if you need the website to include cookies in the requests sent
     // to the API (e.g. in case you use sessions)
-    // res.setHeader('Access-Control-Allow-Credentials', true);
+    res.setHeader('Access-Control-Allow-Credentials', true);
 
     // Pass to next layer of middleware
     next();
@@ -36,35 +52,13 @@ app.use((req, res, next) => {
 
 // Error handler middleware
 app.use(function (err, req, res, next) {
-    if(err) {
-        return res.status(401).json({
-            status: 'error',
-            code: 'unauthorized'
-        });
+    if (err) {
+        return err;
     }
     next();
 });
 
-app.get('/setcookie', function(req, res){
-    // setting cookies
-    res.cookie('username', 'john doe', { maxAge: 900000, httpOnly: true });
-    return res.send('Cookie has been set');
-});
 
-app.get('/getcookie', function(req, res) {
-    var username = req.cookies['username'];
-    if (username) {
-        return res.send(username);        
-    }
-
-    return res.send('No cookie found');
-});
-
-app.use('/test', function (req, res) {
-    
-})
-
-app.listen(3000, function(){
+app.listen(3000, function () {
     console.log("server run " + 3000)
 })
-
