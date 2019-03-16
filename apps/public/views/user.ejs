@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <% include ./commons/header %>
+</head>
+
+<body>
+    <header>
+        <% include ./commons/nav-bar %>
+    </header>
+    <main>
+        <div class="jumbotron">
+            <h1>This is great</h1>
+            <p>Welcome to templating using EJS</p>
+            <h1>Hello</h1>
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th>Id</th>
+                        <th>Email</th>
+                        <th>Password</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% for(const user in userMap) { %>
+                    <tr>
+                        <td><%= userMap[user].id %></td>
+                        <td><%= userMap[user].email %></td>
+                        <td><%= userMap[user].password %></td>
+                    </tr>
+                    <% } %>
+                </tbody>
+            </table>
+        </div>
+    </main>
+    <footer>
+        <% include ./commons/footer %>
+    </footer>
+</body>
+
+</html>

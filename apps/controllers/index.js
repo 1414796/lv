@@ -23,7 +23,14 @@ router.get("/", (req, res) => {
   } catch (error) {
     console.log(error);
   }
+});
 
+router.get("/index", (req, res) => {
+  res.render("index");
+});
+
+router.get("/about", (req, res) => {
+  res.render("about");
 });
 
 router.get("/get-list-user", (req, res) => {
@@ -33,17 +40,18 @@ router.get("/get-list-user", (req, res) => {
     users.forEach(function (user) {
       userMap[user._id] = user;
     });
-
-    res.send(userMap);
+    res.render("user", {
+      userMap
+    });
   });
 });
 
-router.get("/index", (req, res) => {
-  res.render("index", {
-    title: "Hey",
-    message: "Hello there!"
-  });
-});
+// router.get("/index", (req, res) => {
+//   res.render("index", {
+//     title: "Hey",
+//     message: "Hello there!"
+//   });
+// });
 
 router.get("/setcookie", function (req, res) {
   // setting cookies

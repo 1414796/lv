@@ -1,12 +1,24 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
+    <% include ./commons/header %>
 </head>
+
 <body>
-    <h1>Hello</h1>
+    <header>
+        <% include ./commons/nav-bar %>
+    </header>
+    <main>
+        <div class="jumbotron">
+            <h1>This is great</h1>
+            <p>Welcome to templating using EJS</p>
+            <h1>Index Page</h1>
+        </div>
+    </main>
+    <footer>
+        <% include ./commons/footer %>
+    </footer>
 </body>
+
 </html>
