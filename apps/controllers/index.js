@@ -33,25 +33,9 @@ router.get("/about", (req, res) => {
   res.render("about");
 });
 
-router.get("/get-list-user", (req, res) => {
-  User.find({}, function (err, users) {
-    let userMap = {};
-
-    users.forEach(function (user) {
-      userMap[user._id] = user;
-    });
-    res.render("user", {
-      userMap
-    });
-  });
+router.get("/form", (req, res) => {
+  res.render("form");
 });
-
-// router.get("/index", (req, res) => {
-//   res.render("index", {
-//     title: "Hey",
-//     message: "Hello there!"
-//   });
-// });
 
 router.get("/setcookie", function (req, res) {
   // setting cookies
@@ -73,7 +57,8 @@ router.get("/getcookie", (req, res) => {
   return res.send("No cookie found");
 });
 
-router.use("/api/demo", require(__dirname + "/demo/demo"));
+router.use("/user", require(__dirname + "/user.controller"));
+
 
 module.exports = router;
 
